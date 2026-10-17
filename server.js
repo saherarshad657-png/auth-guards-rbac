@@ -10,6 +10,36 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+let connectionPromise;
+
+async function connectToDatabase() {
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  if (!connectionPromise) {
+    connectionPromise = mongoose.connect(process.env.MONGODB_URI)
+      .catch((error) => {
+        connectionPromise = null;
+        throw error;
+      });
+  }
+
+  return connectionPromise;
+}
+
+// Ensure MongoDB is connected before processing requests.
+app.use(async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    res.status(500).json({ message: "Database connection failed." });
+  }
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 const authRoutes = require("./routes/auth");
@@ -22,29 +52,13 @@ app.get("/api/health", (req, res) => {
   res.json({ message: "Auth RBAC server is running!" });
 });
 
-async function startServer() {
-  try {
-    if (!process.env.MONGODB_URI) {
-      throw new Error("MONGODB_URI is missing from .env");
-    }
+module.exports = app;
 
-    if (!process.env.JWT_SECRET ||
-        process.env.JWT_SECRET === "replace_with_a_long_random_secret") {
-      throw new Error("Set a private JWT_SECRET in .env first");
-    }
+// Run the local server when using: node server.js
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
 
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("MongoDB connected successfully!");
-
-    const PORT = process.env.PORT || 5000;
-
-    app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error("Startup failed:", error.message);
-    process.exit(1);
-  }
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+  });
 }
-
-startServer();
