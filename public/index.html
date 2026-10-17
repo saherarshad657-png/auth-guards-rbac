@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureAccess | Authentication</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <section class="brand">
+      <div class="logo">S</div>
+      <h1>SecureAccess</h1>
+      <p>Authentication & Role-Based Access Control</p>
+    </section>
+
+    <section id="auth-section" class="card">
+      <div class="tabs">
+        <button id="login-tab" class="tab active" type="button">Login</button>
+        <button id="signup-tab" class="tab" type="button">Create account</button>
+      </div>
+
+      <form id="login-form">
+        <h2>Welcome back</h2>
+        <p class="muted">Log in to access your secure dashboard.</p>
+
+        <label for="login-email">Email address</label>
+        <input id="login-email" type="email" required autocomplete="email"
+               placeholder="you@example.com">
+
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" required
+               autocomplete="current-password" placeholder="Enter password">
+
+        <button class="primary" type="submit">Login</button>
+      </form>
+
+      <form id="signup-form" class="hidden">
+        <h2>Create your account</h2>
+        <p class="muted">Get started with SecureAccess.</p>
+
+        <label for="signup-name">Full name</label>
+        <input id="signup-name" type="text" required maxlength="100"
+               autocomplete="name" placeholder="Your name">
+
+        <label for="signup-email">Email address</label>
+        <input id="signup-email" type="email" required autocomplete="email"
+               placeholder="you@example.com">
+
+        <label for="signup-password">Password</label>
+        <input id="signup-password" type="password" required minlength="8"
+               autocomplete="new-password" placeholder="At least 8 characters">
+
+        <button class="primary" type="submit">Create account</button>
+      </form>
+
+      <p id="auth-message" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="dashboard-section" class="card hidden">
+      <div class="dashboard-header">
+        <div>
+          <p class="eyebrow">SECURE AREA</p>
+          <h2 id="welcome-title">Your dashboard</h2>
+        </div>
+        <span id="role-badge" class="badge">USER</span>
+      </div>
+
+      <p class="muted">You are signed in. Your account details are below.</p>
+
+      <div class="info-row">
+        <span>Name</span>
+        <strong id="user-name">—</strong>
+      </div>
+      <div class="info-row">
+        <span>Email</span>
+        <strong id="user-email">—</strong>
+      </div>
+      <div class="info-row">
+        <span>Role</span>
+        <strong id="user-role">—</strong>
+      </div>
+
+      <div id="admin-area" class="admin-area hidden">
+        <h3>Administrator access</h3>
+        <p id="admin-message" class="muted">
+          This area is available only to administrators.
+        </p>
+        <button id="admin-button" class="secondary" type="button">
+          Open admin panel
+        </button>
+      </div>
+
+      <p id="dashboard-message" class="message" role="status"
+         aria-live="polite"></p>
+
+      <button id="logout-button" class="logout" type="button">Logout</button>
+    </section>
+
+    <footer>SecureAccess · Authentication Demo</footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
