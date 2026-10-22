@@ -1,70 +1,68 @@
-# Interactive Dashboard UI & Data Tables
 
-A responsive full-stack admin dashboard built with HTML, CSS, JavaScript, Node.js, Express.js, and MongoDB. The application provides an interactive interface for managing users, searching records, filtering data, and monitoring user statistics.
+# Auth Guards & Role-Based Access Control
+
+A full-stack authentication project built with Node.js, Express.js, MongoDB, and JWT. It demonstrates secure user authentication, protected routes, and role-based authorization.
 
 ## Features
 
-- **Responsive Dashboard:** Layout designed for desktop and mobile screens.
-- **User Management:** Add, view, edit, and delete user records.
-- **Search Functionality:** Search users by name or email.
-- **Advanced Filtering:** Filter records by user role and account status.
-- **User Statistics:** Display total users, active users, administrators, and inactive users.
-- **Status Indicators:** Visual status pills for active and inactive accounts.
-- **Data Tables:** Organized user records with pagination.
-- **Database Integration:** Persist user data in MongoDB using Mongoose.
-- **REST API:** Express.js endpoints for creating, retrieving, updating, and deleting users.
-- **Environment Configuration:** Use environment variables for database configuration.
-- **Error Handling:** Handle database errors, duplicate email addresses, and invalid user data.
+- User registration and login
+- Password hashing with bcrypt
+- JWT-based authentication
+- Protected dashboard for authenticated users
+- Role-based access control for users and admins
+- Admin-only API endpoint
+- Session persistence using sessionStorage
+- Logout functionality
+- MongoDB database integration
+- Environment variables for sensitive configuration
 
 ## Technologies Used
 
-| Category | Technologies |
-|---|---|
-| Frontend | HTML5, CSS3, JavaScript |
-| Backend | Node.js, Express.js |
-| Database | MongoDB |
-| ODM | Mongoose |
-| API | REST API |
-| Environment Variables | dotenv |
-| Development Tools | Visual Studio Code, Git, GitHub |
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB with Mongoose
+- **Authentication:** JSON Web Tokens (JWT)
+- **Password Security:** bcryptjs
+- **Development:** VS Code, Git, GitHub
 
 ## Project Structure
 
 ```text
-interactive-dashboard-project/
+auth-rbac-project/
+├── middleware/
+│   └── authMiddleware.js
+├── models/
+│   └── user.js
 ├── public/
+│   ├── app.js
 │   ├── index.html
-│   ├── style.css
-│   └── app.js
-├── .env
+│   └── style.css
+├── routes/
+│   ├── auth.js
+│   ├── protected.js
+│   └── userRoutes.js
 ├── .gitignore
 ├── package.json
 ├── package-lock.json
-├── server.js
-└── README.md
+└── server.js
 ```
 
 ## Getting Started
 
-Follow these steps to run the application locally.
-
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/)
-- npm
-- A MongoDB database, such as [MongoDB Atlas](https://www.mongodb.com/atlas)
-- [Git](https://git-scm.com/)
+- Node.js and npm
+- A MongoDB database, such as MongoDB Atlas
+- Git
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd interactive-dashboard-project
+git clone https://github.com/saherarshad657-png/auth-guards-rbac.git
+cd auth-guards-rbac
 ```
 
-Replace `YOUR_GITHUB_REPOSITORY_URL` with the actual URL of your GitHub repository.
-
-### 2. Install Dependencies
+### 2. Install dependencies
 
 On Windows PowerShell, run:
 
@@ -72,75 +70,65 @@ On Windows PowerShell, run:
 npm.cmd install
 ```
 
-### 3. Configure Environment Variables
+### 3. Configure environment variables
 
 Create a `.env` file in the project's root directory:
 
 ```env
 PORT=5000
 MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_long_random_secret
+JWT_EXPIRES_IN=1h
 ```
 
-Replace the example MongoDB URI with your own connection string. Ensure your MongoDB Atlas network access settings allow your development machine to connect.
+Replace the example values with your own private configuration. Never commit `.env` or share your database credentials.
 
-**Security:** Never upload your `.env` file or expose your database credentials on GitHub.
-
-### 4. Start the Server
-
-Run:
+### 4. Start the server
 
 ```powershell
-npm.cmd start
+node server.js
 ```
 
-When the server starts successfully, open:
+Open the application at:
 
 http://localhost:5000
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
+| Method | Endpoint | Access |
 |---|---|---|
-| GET | `/api/health` | Check API and database connectivity |
-| GET | `/api/users` | Retrieve all users |
-| POST | `/api/users` | Add a new user |
-| PUT | `/api/users/:id` | Update an existing user |
-| DELETE | `/api/users/:id` | Delete a user |
+| POST | `/api/auth/signup` | Public |
+| POST | `/api/auth/login` | Public |
+| GET | `/api/dashboard` | Authenticated users |
+| GET | `/api/admin` | Admin only |
+| GET | `/api/health` | Public |
 
-## User Data Management
+## Security Behavior
 
-Each user record can include:
-
-- Name
-- Email address
-- Role (`admin`, `user`, or `editor`)
-- Account status (`active` or `inactive`)
-- Date joined
-- Last active information
-
-MongoDB stores user records so that changes persist beyond a page refresh or server restart.
+- Passwords are hashed before being stored.
+- Protected endpoints require a valid JWT.
+- Missing, invalid, or expired tokens are rejected.
+- Normal users cannot access admin-only endpoints.
+- New registrations receive the default `user` role.
+- Admin privileges must be assigned through a trusted administrative process.
 
 ## Testing
 
-The application has been tested locally for its core functionality:
+The following behaviors have been tested locally:
 
-- Connecting to MongoDB Atlas.
-- Adding and retrieving user records.
-- Searching users by name and email.
-- Filtering records by role and status.
-- Editing and deleting users.
-- Updating dashboard statistics.
-- Displaying user information in a data table.
+- Successful signup and login
+- Access denied when a token is missing
+- Invalid token rejected
+- Normal user denied access to the admin endpoint
+- Admin user allowed to access the admin endpoint
 
 ## Future Improvements
 
-- Add user authentication and permission controls.
-- Add sorting by table columns.
-- Improve loading indicators and error messages.
-- Add automated API and frontend tests.
-- Deploy the application to a hosting service.
+- Add automated tests
+- Add password reset functionality
+- Improve input validation and rate limiting
+- Deploy the application to a hosting service
 
 ## Author
 
-Developed as a learning project to practice frontend development, backend programming, REST API integration, database operations, and responsive dashboard design.
-
+Developed as a learning project to practice backend authentication, API security, and role-based access control.
