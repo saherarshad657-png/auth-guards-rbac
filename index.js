@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f7fb">
+  <title>SecureAccess | Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#">
+        <span class="brand-icon">S</span>
+        <span>Secure<span class="brand-light">Access</span></span>
+      </a>
+
+      <p class="nav-heading">WORKSPACE</p>
+      <nav class="navigation">
+        <a class="nav-link active" href="#dashboard">
+          <span>▦</span> Dashboard
+        </a>
+        <a class="nav-link" href="#users">
+          <span>♙</span> Users
+        </a>
+        <a class="nav-link" href="#activity">
+          <span>◷</span> Activity
+        </a>
+        <a class="nav-link" href="#settings">
+          <span>⚙</span> Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">?</div>
+          <strong>Need some help?</strong>
+          <p>Manage your workspace with confidence.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar">SA</div>
+          <div class="profile-info">
+            <strong>Admin User</strong>
+            <span>Administrator</span>
+          </div>
+          <span class="profile-menu">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+      <header class="topbar">
+        <button class="menu-button" id="menuButton"
+          aria-label="Toggle navigation">☰</button>
+        <div>
+          <p class="eyebrow">WORKSPACE / OVERVIEW</p>
+          <h1>Dashboard</h1>
+        </div>
+        <div class="topbar-right">
+          <span class="live-indicator"><span></span> System operational</span>
+          <div class="top-avatar">SA</div>
+        </div>
+      </header>
+
+      <section class="welcome-row">
+        <div>
+          <h2>Good to see you! 👋</h2>
+          <p>Here's what's happening in your workspace today.</p>
+        </div>
+        <button class="primary-button" id="refreshButton">
+          <span>↻</span> Refresh data
+        </button>
+      </section>
+
+      <section class="stats-grid" aria-label="User statistics">
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Total users</span>
+            <span class="stat-icon purple">♙</span>
+          </div>
+          <h3 id="totalUsers">0</h3>
+          <p class="stat-caption">All registered accounts</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Active users</span>
+            <span class="stat-icon green">✓</span>
+          </div>
+          <h3 id="activeUsers">0</h3>
+          <p class="stat-caption">Accounts marked active</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Administrators</span>
+            <span class="stat-icon blue">♜</span>
+          </div>
+          <h3 id="adminUsers">0</h3>
+          <p class="stat-caption">Users with admin role</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Inactive users</span>
+            <span class="stat-icon orange">◷</span>
+          </div>
+          <h3 id="inactiveUsers">0</h3>
+          <p class="stat-caption">Accounts marked inactive</p>
+        </article>
+      </section>
+
+      <section class="table-section" id="users">
+        <div class="section-heading">
+          <div>
+            <h2>User management</h2>
+            <p>Search, filter and review your workspace accounts.</p>
+          </div>
+          <span class="record-count" id="recordCount">0 records</span>
+        </div>
+
+        <div class="table-toolbar">
+          <label class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="search"
+              placeholder="Search name or email..." autocomplete="off">
+          </label>
+
+          <select id="roleFilter" aria-label="Filter by role">
+            <option value="all">All roles</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+          </select>
+
+          <select id="statusFilter" aria-label="Filter by status">
+            <option value="all">All statuses</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+
+          <button class="secondary-button" id="clearFilters">Clear filters</button>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>USER</th>
+                <th>ROLE</th>
+                <th>STATUS</th>
+                <th>JOINED</th>
+                <th>LAST ACTIVE</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">Loading dashboard data...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-footer">
+          <p id="pageInfo">Showing 0 records</p>
+          <div class="pagination">
+            <button id="prevPage" class="page-button" disabled>← Previous</button>
+            <span id="pageNumber">1</span>
+            <button id="nextPage" class="page-button" disabled>Next →</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>© 2026 SecureAccess</span>
+        <span>Interactive Dashboard UI &amp; Data Tables</span>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -4,102 +4,219 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SecureAccess | Authentication</title>
+  <meta name="theme-color" content="#f6f7fb">
+  <title>SecureAccess | Admin Dashboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="container">
-    <section class="brand">
-      <div class="logo">S</div>
-      <h1>SecureAccess</h1>
-      <p>Authentication & Role-Based Access Control</p>
-    </section>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#">
+        <span class="brand-icon">S</span>
+        <span>Secure<span class="brand-light">Access</span></span>
+      </a>
 
-    <section id="auth-section" class="card">
-      <div class="tabs">
-        <button id="login-tab" class="tab active" type="button">Login</button>
-        <button id="signup-tab" class="tab" type="button">Create account</button>
-      </div>
+      <p class="nav-heading">WORKSPACE</p>
+      <nav class="navigation">
+        <a class="nav-link active" href="#dashboard">
+          <span>▦</span> Dashboard
+        </a>
+        <a class="nav-link" href="#users">
+          <span>♙</span> Users
+        </a>
+        <a class="nav-link" href="#activity">
+          <span>◷</span> Activity
+        </a>
+        <a class="nav-link" href="#settings">
+          <span>⚙</span> Settings
+        </a>
+      </nav>
 
-      <form id="login-form">
-        <h2>Welcome back</h2>
-        <p class="muted">Log in to access your secure dashboard.</p>
-
-        <label for="login-email">Email address</label>
-        <input id="login-email" type="email" required autocomplete="email"
-               placeholder="you@example.com">
-
-        <label for="login-password">Password</label>
-        <input id="login-password" type="password" required
-               autocomplete="current-password" placeholder="Enter password">
-
-        <button class="primary" type="submit">Login</button>
-      </form>
-
-      <form id="signup-form" class="hidden">
-        <h2>Create your account</h2>
-        <p class="muted">Get started with SecureAccess.</p>
-
-        <label for="signup-name">Full name</label>
-        <input id="signup-name" type="text" required maxlength="100"
-               autocomplete="name" placeholder="Your name">
-
-        <label for="signup-email">Email address</label>
-        <input id="signup-email" type="email" required autocomplete="email"
-               placeholder="you@example.com">
-
-        <label for="signup-password">Password</label>
-        <input id="signup-password" type="password" required minlength="8"
-               autocomplete="new-password" placeholder="At least 8 characters">
-
-        <button class="primary" type="submit">Create account</button>
-      </form>
-
-      <p id="auth-message" class="message" role="status" aria-live="polite"></p>
-    </section>
-
-    <section id="dashboard-section" class="card hidden">
-      <div class="dashboard-header">
-        <div>
-          <p class="eyebrow">SECURE AREA</p>
-          <h2 id="welcome-title">Your dashboard</h2>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">?</div>
+          <strong>Need some help?</strong>
+          <p>Manage your workspace with confidence.</p>
         </div>
-        <span id="role-badge" class="badge">USER</span>
+        <div class="profile">
+          <div class="avatar">SA</div>
+          <div class="profile-info">
+            <strong>Admin User</strong>
+            <span>Administrator</span>
+          </div>
+          <span class="profile-menu">•••</span>
+        </div>
       </div>
+    </aside>
 
-      <p class="muted">You are signed in. Your account details are below.</p>
+    <main class="main-content" id="dashboard">
+      <header class="topbar">
+        <button class="menu-button" id="menuButton"
+          aria-label="Toggle navigation">☰</button>
+        <div>
+          <p class="eyebrow">WORKSPACE / OVERVIEW</p>
+          <h1>Dashboard</h1>
+        </div>
+        <div class="topbar-right">
+          <span class="live-indicator"><span></span> System operational</span>
+          <div class="top-avatar">SA</div>
+        </div>
+      </header>
 
-      <div class="info-row">
-        <span>Name</span>
-        <strong id="user-name">—</strong>
-      </div>
-      <div class="info-row">
-        <span>Email</span>
-        <strong id="user-email">—</strong>
-      </div>
-      <div class="info-row">
-        <span>Role</span>
-        <strong id="user-role">—</strong>
-      </div>
-
-      <div id="admin-area" class="admin-area hidden">
-        <h3>Administrator access</h3>
-        <p id="admin-message" class="muted">
-          This area is available only to administrators.
-        </p>
-        <button id="admin-button" class="secondary" type="button">
-          Open admin panel
+      <section class="welcome-row">
+        <div>
+          <h2>Good to see you! 👋</h2>
+          <p>Here's what's happening in your workspace today.</p>
+        </div>
+        <button class="primary-button" id="refreshButton">
+          <span>↻</span> Refresh data
         </button>
+      </section>
+
+      <button id="addUserButton" class="btn-primary">
+  + Add User
+</button>
+
+      <section class="stats-grid" aria-label="User statistics">
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Total users</span>
+            <span class="stat-icon purple">♙</span>
+          </div>
+          <h3 id="totalUsers">0</h3>
+          <p class="stat-caption">All registered accounts</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Active users</span>
+            <span class="stat-icon green">✓</span>
+          </div>
+          <h3 id="activeUsers">0</h3>
+          <p class="stat-caption">Accounts marked active</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Administrators</span>
+            <span class="stat-icon blue">♜</span>
+          </div>
+          <h3 id="adminUsers">0</h3>
+          <p class="stat-caption">Users with admin role</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Inactive users</span>
+            <span class="stat-icon orange">◷</span>
+          </div>
+          <h3 id="inactiveUsers">0</h3>
+          <p class="stat-caption">Accounts marked inactive</p>
+        </article>
+      </section>
+
+      <section class="table-section" id="users">
+        <div class="section-heading">
+          <div>
+            <h2>User management</h2>
+            <p>Search, filter and review your workspace accounts.</p>
+          </div>
+          <span class="record-count" id="recordCount">0 records</span>
+        </div>
+
+        <div class="table-toolbar">
+          <label class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="search"
+              placeholder="Search name or email..." autocomplete="off">
+          </label>
+
+          <select id="roleFilter" aria-label="Filter by role">
+            <option value="all">All roles</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+          </select>
+
+          <select id="statusFilter" aria-label="Filter by status">
+            <option value="all">All statuses</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+
+          <button class="secondary-button" id="clearFilters">Clear filters</button>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>USER</th>
+                <th>ROLE</th>
+                <th>STATUS</th>
+                <th>JOINED</th>
+                <th>LAST ACTIVE</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">Loading dashboard data...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-footer">
+          <p id="pageInfo">Showing 0 records</p>
+          <div class="pagination">
+            <button id="prevPage" class="page-button" disabled>← Previous</button>
+            <span id="pageNumber">1</span>
+            <button id="nextPage" class="page-button" disabled>Next →</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>© 2026 SecureAccess</span>
+        <span>Interactive Dashboard UI &amp; Data Tables</span>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  
+<div id="userModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Add New User</h2>
+
+    <form id="addUserForm">
+      <label for="userName">Full Name</label>
+      <input id="userName" name="name" type="text"
+             placeholder="Enter full name" required>
+
+      <label for="userEmail">Email Address</label>
+      <input id="userEmail" name="email" type="email"
+             placeholder="Enter email address" required>
+
+      <label for="userRole">Role</label>
+      <select id="userRole" name="role" required>
+        <option value="User">User</option>
+        <option value="Admin">Admin</option>
+      </select>
+
+      <label for="userStatus">Status</label>
+      <select id="userStatus" name="status" required>
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+
+      <div class="modal-actions">
+        <button type="button" id="cancelUserButton">Cancel</button>
+        <button type="submit" class="btn-primary">Save User</button>
       </div>
-
-      <p id="dashboard-message" class="message" role="status"
-         aria-live="polite"></p>
-
-      <button id="logout-button" class="logout" type="button">Logout</button>
-    </section>
-
-    <footer>SecureAccess · Authentication Demo</footer>
-  </main>
+    </form>
+  </div>
+</div>
 
   <script src="app.js"></script>
 </body>
